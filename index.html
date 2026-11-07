@@ -9,9 +9,26 @@
 
     <meta name="theme-color" content="#151515">
 
+    <meta name="description"
+          content="デュエル・マスターズ用の対局時計">
+
     <title>デュエマ対局時計</title>
 
+    <!-- PWA設定 -->
+    <link rel="manifest" href="./manifest.json">
+
+    <!-- アプリアイコン -->
+    <link rel="icon"
+          href="./icons/icon-192.png"
+          type="image/png">
+
+    <link rel="apple-touch-icon"
+          href="./icons/icon-192.png">
+
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- JavaScript -->
     <script src="script.js" defer></script>
 </head>
 
@@ -71,7 +88,6 @@
 
             </div>
 
-
             <!-- 時間プリセット -->
 
             <div class="preset-section">
@@ -109,7 +125,6 @@
 
             </div>
 
-
             <!-- 対局開始 -->
 
             <button id="startButton" class="start-button">
@@ -117,7 +132,6 @@
             </button>
 
         </section>
-
 
         <!-- ========================
              対局画面
@@ -147,7 +161,6 @@
 
             </button>
 
-
             <!-- 先攻 -->
 
             <button class="player-button player-one"
@@ -170,7 +183,6 @@
 
             </button>
 
-
             <!-- 中央の操作ボタン -->
 
             <div class="controls">
@@ -189,6 +201,29 @@
 
     </main>
 
+    <!-- ========================
+         Service Worker登録
+    ========================= -->
+
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("./service-worker.js")
+                    .then((registration) => {
+                        console.log(
+                            "Service Worker登録成功:",
+                            registration.scope
+                        );
+                    })
+                    .catch((error) => {
+                        console.error(
+                            "Service Worker登録失敗:",
+                            error
+                        );
+                    });
+            });
+        }
+    </script>
+
 </body>
 </html>
-
