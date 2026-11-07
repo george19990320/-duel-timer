@@ -1,12 +1,12 @@
 
 {
-  "name": "デュエマ対局時計",
+  "name": "デュマ対局時計",
   "short_name": "対局時計",
   "description": "デュエル・マスターズ用の対局時計",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "orientation": "landscape",
+  "orientation": "portrait",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
   "icons": [
