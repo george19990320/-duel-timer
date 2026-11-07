@@ -1,5 +1,5 @@
 
-const CACHE_NAME = "duel-timer-v2";
+const CACHE_NAME = "duel-timer-v3";
 
 const FILES_TO_CACHE = [
   "./",
