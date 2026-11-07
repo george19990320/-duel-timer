@@ -1,12 +1,14 @@
 
-const CACHE_NAME = "duel-timer-v1";
+const CACHE_NAME = "duel-timer-v2";
 
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
   "./style.css",
   "./script.js",
-  "./manifest.json"
+  "./manifest.json",
+  "./icons/icon-192.png",
+  "./icons/icon-512.png"
 ];
 
 // アプリのファイルを保存
@@ -51,6 +53,11 @@ self.addEventListener("fetch", (event) => {
         if (event.request.mode === "navigate") {
           return caches.match("./index.html");
         }
+
+        return new Response("", {
+          status: 503,
+          statusText: "Offline"
+        });
       });
     })
   );
