@@ -3,188 +3,100 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#151515">
-
-    <meta name="description"
-          content="デュエル・マスターズ用の対局時計">
+    <meta name="description" content="デュエル・マスターズ用の対局時計">
 
     <title>デュエマ対局時計</title>
 
-    <!-- PWA設定 -->
     <link rel="manifest" href="./manifest.json">
+    <link rel="icon" href="./icons/icon-192.png" type="image/png">
+    <link rel="apple-touch-icon" href="./icons/icon-192.png">
+    <link rel="stylesheet" href="./style.css">
 
-    <!-- アプリアイコン -->
-    <link rel="icon"
-          href="./icons/icon-192.png"
-          type="image/png">
-
-    <link rel="apple-touch-icon"
-          href="./icons/icon-192.png">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
-
-    <!-- JavaScript -->
-    <script src="script.js" defer></script>
+    <script src="./script.js" defer></script>
 </head>
 
 <body>
+<main class="app">
 
-    <main class="app">
+    <!-- 設定画面 -->
+    <section id="settingsScreen" class="screen settings-screen">
 
-        <!-- ========================
-             設定画面
-        ========================= -->
+        <h1>対局時計の設定</h1>
 
-        <section id="settingsScreen" class="screen settings-screen">
+        <p class="settings-description">
+            対局の持ち時間を設定してください
+        </p>
 
-            <h1>対局時計の設定</h1>
+        <div class="setting-card">
+            <h2>持ち時間（各プレイヤー）</h2>
 
-            <p class="settings-description">
-                対局の持ち時間を設定してください
+            <div class="time-inputs">
+                <div class="input-group">
+                    <label for="minutesInput">分</label>
+                    <input type="number" id="minutesInput"
+                           min="0" max="999" value="10">
+                </div>
+
+                <span class="time-colon">:</span>
+
+                <div class="input-group">
+                    <label for="secondsInput">秒</label>
+                    <input type="number" id="secondsInput"
+                           min="0" max="59" value="0">
+                </div>
+            </div>
+
+            <p class="input-help">
+                先攻・後攻それぞれに同じ時間が設定されます
             </p>
+        </div>
 
-            <div class="setting-card">
+        <div class="preset-section">
+            <h2>時間プリセット</h2>
 
-                <h2>持ち時間（各プレイヤー）</h2>
+            <div class="preset-buttons">
+                <button class="preset-button" data-minutes="5">5分</button>
+                <button class="preset-button selected" data-minutes="10">10分</button>
+                <button class="preset-button" data-minutes="15">15分</button>
+                <button class="preset-button" data-minutes="20">20分</button>
+                <button class="preset-button" data-minutes="30">30分</button>
+            </div>
+        </div>
 
-                <div class="time-inputs">
+        <button id="startButton" class="start-button">
+            対局開始
+        </button>
 
-                    <div class="input-group">
-                        <label for="minutesInput">分</label>
+    </section>
 
-                        <input
-                            type="number"
-                            id="minutesInput"
-                            min="0"
-                            max="999"
-                            value="10"
-                        >
+    <!-- 対局画面 -->
+    <section id="clockScreen" class="screen clock-screen hidden">
+
+        <div class="clock-layout">
+
+            <!-- 画面全体のタップ領域 -->
+            <button id="turnButton" class="turn-button" type="button">
+                <div class="turn-content">
+
+                    <div class="opponent-info">
+                        <div id="opponentPlayerName">相手の残り時間</div>
+                        <div id="opponentTime" class="opponent-time">10:00</div>
                     </div>
 
-                    <span class="time-colon">:</span>
-
-                    <div class="input-group">
-                        <label for="secondsInput">秒</label>
-
-                        <input
-                            type="number"
-                            id="secondsInput"
-                            min="0"
-                            max="59"
-                            value="0"
-                        >
-                    </div>
-
-                </div>
-
-                <p class="input-help">
-                    先攻・後攻それぞれに同じ時間が設定されます
-                </p>
-
-            </div>
-
-            <!-- 時間プリセット -->
-
-            <div class="preset-section">
-
-                <h2>時間プリセット</h2>
-
-                <div class="preset-buttons">
-
-                    <button class="preset-button"
-                            data-minutes="5">
-                        5分
-                    </button>
-
-                    <button class="preset-button selected"
-                            data-minutes="10">
-                        10分
-                    </button>
-
-                    <button class="preset-button"
-                            data-minutes="15">
-                        15分
-                    </button>
-
-                    <button class="preset-button"
-                            data-minutes="20">
-                        20分
-                    </button>
-
-                    <button class="preset-button"
-                            data-minutes="30">
-                        30分
-                    </button>
-
-                </div>
-
-            </div>
-
-            <!-- 対局開始 -->
-
-            <button id="startButton" class="start-button">
-                対局開始
-            </button>
-
-        </section>
-
-        <!-- ========================
-             対局画面
-        ========================= -->
-
-        <section id="clockScreen" class="screen clock-screen hidden">
-
-            <!-- 後攻 -->
-
-            <button class="player-button player-two"
-                    id="button2"
-                    type="button">
-
-                <div class="player-content">
-
-                    <div class="player-name">後攻</div>
-
-                    <div class="player-time" id="time2">
+                    <div id="currentTime" class="current-time">
                         10:00
                     </div>
 
-                    <div class="player-status" id="status2">
-                        待機中
+                    <div id="turnStatus" class="turn-status">
+                        先攻側をタップして開始
                     </div>
 
                 </div>
-
             </button>
 
-            <!-- 先攻 -->
-
-            <button class="player-button player-one"
-                    id="button1"
-                    type="button">
-
-                <div class="player-content">
-
-                    <div class="player-name">先攻</div>
-
-                    <div class="player-time" id="time1">
-                        10:00
-                    </div>
-
-                    <div class="player-status" id="status1">
-                        待機中
-                    </div>
-
-                </div>
-
-            </button>
-
-            <!-- 中央の操作ボタン -->
-
+            <!-- 操作ボタン -->
             <div class="controls">
 
                 <button id="resetButton" type="button">
@@ -197,33 +109,26 @@
 
             </div>
 
-        </section>
+        </div>
 
-    </main>
+    </section>
 
-    <!-- ========================
-         Service Worker登録
-    ========================= -->
+</main>
 
-    <script>
-        if ("serviceWorker" in navigator) {
-            window.addEventListener("load", () => {
-                navigator.serviceWorker.register("./service-worker.js")
-                    .then((registration) => {
-                        console.log(
-                            "Service Worker登録成功:",
-                            registration.scope
-                        );
-                    })
-                    .catch((error) => {
-                        console.error(
-                            "Service Worker登録失敗:",
-                            error
-                        );
-                    });
+<!-- Service Worker登録 -->
+<script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./service-worker.js")
+            .then(registration => {
+                console.log("Service Worker登録成功:", registration.scope);
+            })
+            .catch(error => {
+                console.error("Service Worker登録失敗:", error);
             });
-        }
-    </script>
+    });
+}
+</script>
 
 </body>
 </html>
